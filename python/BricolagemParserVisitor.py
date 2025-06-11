@@ -1,278 +1,260 @@
-# Generated from BricolagemParser.g4 by ANTLR 4.13.2
 from antlr4 import *
 if "." in __name__:
     from .BricolagemParser import BricolagemParser
 else:
     from BricolagemParser import BricolagemParser
 
-# This class defines a complete generic visitor for a parse tree produced by BricolagemParser.
 
 class BricolagemParserVisitor(ParseTreeVisitor):
 
-    # Visit a parse tree produced by BricolagemParser#projetoMaker.
     def visitProjetoMaker(self, ctx:BricolagemParser.ProjetoMakerContext):
-        return self.visitChildren(ctx)
+        return self.visit(ctx.listaElementos())
 
-
-    # Visit a parse tree produced by BricolagemParser#listaElementos.
     def visitListaElementos(self, ctx:BricolagemParser.ListaElementosContext):
-        return self.visitChildren(ctx)
+        return {
+            key: value 
+            for el in ctx.elemento() 
+            if (result := self.visit(el)) is not None 
+            and (key := result[0]) 
+            and (value := result[1])
+        }
 
-
-    # Visit a parse tree produced by BricolagemParser#PNivel.
     def visitPNivel(self, ctx:BricolagemParser.PNivelContext):
-        return self.visitChildren(ctx)
+        nivel_ctx = ctx.nivel()
+        key = nivel_ctx.NIVEL().getText()
+        value = self.visitChildren(ctx)
+        return (key, value)
 
-
-    # Visit a parse tree produced by BricolagemParser#PTema.
     def visitPTema(self, ctx:BricolagemParser.PTemaContext):
-        return self.visitChildren(ctx)
+        tema_ctx = ctx.tema()
+        key = tema_ctx.TEMA().getText()
+        value = self.visitChildren(ctx)
+        return (key, value)
 
-
-    # Visit a parse tree produced by BricolagemParser#PObjetivosProjeto.
     def visitPObjetivosProjeto(self, ctx:BricolagemParser.PObjetivosProjetoContext):
-        return self.visitChildren(ctx)
+        key = "ObjetivosProjeto"
+        value = self.visitChildren(ctx)
+        return (key, value)
 
-
-    # Visit a parse tree produced by BricolagemParser#PAtividadesProjeto.
     def visitPAtividadesProjeto(self, ctx:BricolagemParser.PAtividadesProjetoContext):
-        return self.visitChildren(ctx)
+        atividades_ctx = ctx.atividadesProjeto()
+        key = atividades_ctx.ATIVIDADES().getText()
+        value = self.visitChildren(ctx)
+        return (key, value)
 
-
-    # Visit a parse tree produced by BricolagemParser#PAvaliacaoProjeto.
     def visitPAvaliacaoProjeto(self, ctx:BricolagemParser.PAvaliacaoProjetoContext):
-        return self.visitChildren(ctx)
+        avaliacao_ctx = ctx.avaliacaoProjeto()
+        key = avaliacao_ctx.AVALIACAO().getText()
+        value = self.visitChildren(ctx)
+        return (key, value)
 
-
-    # Visit a parse tree produced by BricolagemParser#PRecursosProjeto.
     def visitPRecursosProjeto(self, ctx:BricolagemParser.PRecursosProjetoContext):
-        return self.visitChildren(ctx)
+        recursos_ctx = ctx.recursosProjeto()
+        key = recursos_ctx.RECURSOS().getText()
+        value = self.visitChildren(ctx)
+        return (key, value)
 
-
-    # Visit a parse tree produced by BricolagemParser#PConformidadeProjetoBNCC.
     def visitPConformidadeProjetoBNCC(self, ctx:BricolagemParser.PConformidadeProjetoBNCCContext):
-        return self.visitChildren(ctx)
+        conformidade_ctx = ctx.conformidadeProjetoBNCC()
+        key = conformidade_ctx.CONFORMIDADE_BNCC().getText()
+        value = self.visitChildren(ctx)
+        return (key, value)
 
-
-    # Visit a parse tree produced by BricolagemParser#nivel.
     def visitNivel(self, ctx:BricolagemParser.NivelContext):
-        return self.visitChildren(ctx)
+        return ctx.STRING().getText().strip('"')
 
-
-    # Visit a parse tree produced by BricolagemParser#tema.
     def visitTema(self, ctx:BricolagemParser.TemaContext):
-        return self.visitChildren(ctx)
+        return ctx.STRING().getText().strip('"')
 
-
-    # Visit a parse tree produced by BricolagemParser#objetivosProjeto.
     def visitObjetivosProjeto(self, ctx:BricolagemParser.ObjetivosProjetoContext):
-        return self.visitChildren(ctx)
+        return [self.visit(objetivo) for objetivo in ctx.objetivo()]
 
-
-    # Visit a parse tree produced by BricolagemParser#PObjetivosEnsino.
     def visitPObjetivosEnsino(self, ctx:BricolagemParser.PObjetivosEnsinoContext):
-        return self.visitChildren(ctx)
+        key = ctx.OBJETIVO_ENSINO().getText()
+        value = self.visit(ctx.listaObjetivosEnsino())
+        return {key: value}
 
-
-    # Visit a parse tree produced by BricolagemParser#PObjetivosAprendizagem.
     def visitPObjetivosAprendizagem(self, ctx:BricolagemParser.PObjetivosAprendizagemContext):
-        return self.visitChildren(ctx)
+        key = ctx.OBJETIVO_APRENDIZAGEM().getText()
+        value = self.visit(ctx.listaObjetivosAprendizagem())
+        return {key: value}
 
-
-    # Visit a parse tree produced by BricolagemParser#PObjetivosPesquisa.
     def visitPObjetivosPesquisa(self, ctx:BricolagemParser.PObjetivosPesquisaContext):
-        return self.visitChildren(ctx)
+        key = ctx.OBJETIVO_PESQUISA().getText()
+        value = self.visit(ctx.listaObjetivosPesquisa())
+        return {key: value}
 
 
-    # Visit a parse tree produced by BricolagemParser#PObjetivosEducacionais.
     def visitPObjetivosEducacionais(self, ctx:BricolagemParser.PObjetivosEducacionaisContext):
-        return self.visitChildren(ctx)
+        key = ctx.OBJETIVO_EDUCACIONAL().getText()
+        value = self.visit(ctx.listaObjetivosEducacionais())
+        return {key: value}
 
-
-    # Visit a parse tree produced by BricolagemParser#listaObjetivosEnsino.
     def visitListaObjetivosEnsino(self, ctx:BricolagemParser.ListaObjetivosEnsinoContext):
-        return self.visitChildren(ctx)
+        return {
+            key: value 
+            for el in ctx.objetivoEnsino() 
+            if (result := self.visit(el)) is not None 
+            and (key := result[0]) 
+            and (value := result[1])
+        }
 
-
-    # Visit a parse tree produced by BricolagemParser#PObjetivoEnsino.
     def visitPObjetivoEnsino(self, ctx:BricolagemParser.PObjetivoEnsinoContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by BricolagemParser#idObjetivoEnsino.
+        key = self.visit(ctx.idObjetivoEnsino())
+        value = self.visit(ctx.descricaoObjetivoEnsino())
+        return (key, value)
+    
     def visitIdObjetivoEnsino(self, ctx:BricolagemParser.IdObjetivoEnsinoContext):
-        return self.visitChildren(ctx)
+        return ctx.getText().strip('"')
 
-
-    # Visit a parse tree produced by BricolagemParser#descricaoObjetivoEnsino.
     def visitDescricaoObjetivoEnsino(self, ctx:BricolagemParser.DescricaoObjetivoEnsinoContext):
-        return self.visitChildren(ctx)
+        return ctx.getText().strip('"')
 
-
-    # Visit a parse tree produced by BricolagemParser#listaObjetivosAprendizagem.
     def visitListaObjetivosAprendizagem(self, ctx:BricolagemParser.ListaObjetivosAprendizagemContext):
-        return self.visitChildren(ctx)
+        return {
+            key: value 
+            for el in ctx.objetivoAprendizagem() 
+            if (result := self.visit(el)) is not None 
+            and (key := result[0]) 
+            and (value := result[1])
+        }
 
-
-    # Visit a parse tree produced by BricolagemParser#PObjetivoAprendizagen.
     def visitPObjetivoAprendizagen(self, ctx:BricolagemParser.PObjetivoAprendizagenContext):
-        return self.visitChildren(ctx)
+        key = self.visit(ctx.idObjetivoAprendizagem())
+        value = self.visit(ctx.descricaoObjetivoAprendizagem())
+        return (key, value)
 
-
-    # Visit a parse tree produced by BricolagemParser#idObjetivoAprendizagem.
     def visitIdObjetivoAprendizagem(self, ctx:BricolagemParser.IdObjetivoAprendizagemContext):
-        return self.visitChildren(ctx)
+        return ctx.getText().strip('"')
 
-
-    # Visit a parse tree produced by BricolagemParser#descricaoObjetivoAprendizagem.
     def visitDescricaoObjetivoAprendizagem(self, ctx:BricolagemParser.DescricaoObjetivoAprendizagemContext):
-        return self.visitChildren(ctx)
+        return ctx.getText().strip('"')
 
-
-    # Visit a parse tree produced by BricolagemParser#listaObjetivosPesquisa.
     def visitListaObjetivosPesquisa(self, ctx:BricolagemParser.ListaObjetivosPesquisaContext):
-        return self.visitChildren(ctx)
+        return {
+            key: value 
+            for el in ctx.objetivoPesquisa() 
+            if (result := self.visit(el)) is not None 
+            and (key := result[0]) 
+            and (value := result[1])
+        }
 
-
-    # Visit a parse tree produced by BricolagemParser#PObjetivoPesquisa.
     def visitPObjetivoPesquisa(self, ctx:BricolagemParser.PObjetivoPesquisaContext):
-        return self.visitChildren(ctx)
+        key = self.visit(ctx.idObjetivoPesquisa())
+        value = self.visit(ctx.descricaoObjetivoPesquisa())
+        return (key, value)
 
-
-    # Visit a parse tree produced by BricolagemParser#idObjetivoPesquisa.
     def visitIdObjetivoPesquisa(self, ctx:BricolagemParser.IdObjetivoPesquisaContext):
-        return self.visitChildren(ctx)
+        return ctx.getText().strip('"')
 
-
-    # Visit a parse tree produced by BricolagemParser#descricaoObjetivoPesquisa.
     def visitDescricaoObjetivoPesquisa(self, ctx:BricolagemParser.DescricaoObjetivoPesquisaContext):
-        return self.visitChildren(ctx)
+        return ctx.getText().strip('"')
 
-
-    # Visit a parse tree produced by BricolagemParser#listaObjetivosEducacionais.
     def visitListaObjetivosEducacionais(self, ctx:BricolagemParser.ListaObjetivosEducacionaisContext):
-        return self.visitChildren(ctx)
+        return {
+            key: value 
+            for el in ctx.objetivoEducacional() 
+            if (result := self.visit(el)) is not None 
+            and (key := result[0]) 
+            and (value := result[1])
+        }
 
-
-    # Visit a parse tree produced by BricolagemParser#PObjetivoEducacional.
     def visitPObjetivoEducacional(self, ctx:BricolagemParser.PObjetivoEducacionalContext):
-        return self.visitChildren(ctx)
+        key = self.visit(ctx.idObjetivoEducacional())
+        value = self.visit(ctx.descricaoObjetivoEducacional())
+        return (key, value)
 
-
-    # Visit a parse tree produced by BricolagemParser#idObjetivoEducacional.
     def visitIdObjetivoEducacional(self, ctx:BricolagemParser.IdObjetivoEducacionalContext):
-        return self.visitChildren(ctx)
+        return ctx.getText().strip('"')
 
-
-    # Visit a parse tree produced by BricolagemParser#descricaoObjetivoEducacional.
     def visitDescricaoObjetivoEducacional(self, ctx:BricolagemParser.DescricaoObjetivoEducacionalContext):
-        return self.visitChildren(ctx)
+        return ctx.getText().strip('"')
 
-
-    # Visit a parse tree produced by BricolagemParser#atividadesProjeto.
     def visitAtividadesProjeto(self, ctx:BricolagemParser.AtividadesProjetoContext):
-        return self.visitChildren(ctx)
+        return self.visit(ctx.listaAtividades())
 
-
-    # Visit a parse tree produced by BricolagemParser#listaAtividades.
     def visitListaAtividades(self, ctx:BricolagemParser.ListaAtividadesContext):
-        return self.visitChildren(ctx)
+        return [child for c in ctx.children if (child := self.visit(c)) is not None]
 
-
-    # Visit a parse tree produced by BricolagemParser#PAtividade.
     def visitPAtividade(self, ctx:BricolagemParser.PAtividadeContext):
-        return self.visitChildren(ctx)
+        key = ctx.nomeAtividade().getText().strip('"')
+        value = self.visit(ctx.listaComponentesAtividade())
+        return {key: value}
 
-
-    # Visit a parse tree produced by BricolagemParser#PNomeAtividade.
     def visitPNomeAtividade(self, ctx:BricolagemParser.PNomeAtividadeContext):
-        return self.visitChildren(ctx)
+        return ctx.getText().strip('"')
 
-
-    # Visit a parse tree produced by BricolagemParser#listaComponentesAtividade.
     def visitListaComponentesAtividade(self, ctx:BricolagemParser.ListaComponentesAtividadeContext):
-        return self.visitChildren(ctx)
+        return {
+            key: value
+            for el in ctx.componenteAtividade()
+            if (result := self.visit(el)) is not None 
+            and (key := result[0]) 
+            and (value := result[1])
+        }
 
-
-    # Visit a parse tree produced by BricolagemParser#componenteAtividade.
     def visitComponenteAtividade(self, ctx:BricolagemParser.ComponenteAtividadeContext):
         return self.visitChildren(ctx)
 
-
-    # Visit a parse tree produced by BricolagemParser#descricaoAtividade.
     def visitDescricaoAtividade(self, ctx:BricolagemParser.DescricaoAtividadeContext):
-        return self.visitChildren(ctx)
+        key = ctx.DESCRICAO().getText().strip('"')
+        value = ctx.STRING().getText().strip('"')
+        return (key, value)
 
-
-    # Visit a parse tree produced by BricolagemParser#duracaoAtividade.
     def visitDuracaoAtividade(self, ctx:BricolagemParser.DuracaoAtividadeContext):
-        return self.visitChildren(ctx)
+        key = ctx.DURACAOMINUTOS().getText().strip('"')
+        value = ctx.NUMERO().getText().strip('"')
+        return (key, value)
 
-
-    # Visit a parse tree produced by BricolagemParser#passosAtividade.
     def visitPassosAtividade(self, ctx:BricolagemParser.PassosAtividadeContext):
-        return self.visitChildren(ctx)
+        key = ctx.PASSOS().getText()
+        value = [self.visit(passoAtividade) for passoAtividade in ctx.passoAtividade()]
+        return (key, value)
 
-
-    # Visit a parse tree produced by BricolagemParser#PPassoAtividade.
     def visitPPassoAtividade(self, ctx:BricolagemParser.PPassoAtividadeContext):
-        return self.visitChildren(ctx)
+        return ctx.getText().strip('"')
 
-
-    # Visit a parse tree produced by BricolagemParser#avaliacaoProjeto.
     def visitAvaliacaoProjeto(self, ctx:BricolagemParser.AvaliacaoProjetoContext):
-        return self.visitChildren(ctx)
+        return self.visit(ctx.listaComponentesAvaliacao())
 
-
-    # Visit a parse tree produced by BricolagemParser#listaComponentesAvaliacao.
     def visitListaComponentesAvaliacao(self, ctx:BricolagemParser.ListaComponentesAvaliacaoContext):
-        return self.visitChildren(ctx)
+        return {
+            key: value
+            for el in ctx.componenteAvaliacao()
+            if (result := self.visit(el)) is not None 
+            and (key := result[0]) 
+            and (value := result[1])
+        }
 
-
-    # Visit a parse tree produced by BricolagemParser#componenteAvaliacao.
     def visitComponenteAvaliacao(self, ctx:BricolagemParser.ComponenteAvaliacaoContext):
         return self.visitChildren(ctx)
 
-
-    # Visit a parse tree produced by BricolagemParser#criteriosAvaliacao.
     def visitCriteriosAvaliacao(self, ctx:BricolagemParser.CriteriosAvaliacaoContext):
-        return self.visitChildren(ctx)
+        key = ctx.CRITERIOS().getText()
+        value = [self.visit(criterioAvaliacao) for criterioAvaliacao in ctx.criterioAvaliacao()]
+        return (key, value)
 
-
-    # Visit a parse tree produced by BricolagemParser#PCriterioAvaliacao.
     def visitPCriterioAvaliacao(self, ctx:BricolagemParser.PCriterioAvaliacaoContext):
-        return self.visitChildren(ctx)
+        return ctx.getText().strip('"')
 
-
-    # Visit a parse tree produced by BricolagemParser#instrumentosAvaliacao.
     def visitInstrumentosAvaliacao(self, ctx:BricolagemParser.InstrumentosAvaliacaoContext):
-        return self.visitChildren(ctx)
+        key = ctx.INSTRUMENTOS().getText()
+        value = [self.visit(instrumentoAvaliacao) for instrumentoAvaliacao in ctx.instrumentoAvaliacao()]
+        return (key, value)
 
-
-    # Visit a parse tree produced by BricolagemParser#PInstrumentoAvaliacao.
     def visitPInstrumentoAvaliacao(self, ctx:BricolagemParser.PInstrumentoAvaliacaoContext):
-        return self.visitChildren(ctx)
+        return ctx.getText().strip('"')
 
-
-    # Visit a parse tree produced by BricolagemParser#recursosProjeto.
     def visitRecursosProjeto(self, ctx:BricolagemParser.RecursosProjetoContext):
-        return self.visitChildren(ctx)
+        return [self.visit(recurso) for recurso in ctx.recurso()]
 
-
-    # Visit a parse tree produced by BricolagemParser#PRecursoProjeto.
     def visitPRecursoProjeto(self, ctx:BricolagemParser.PRecursoProjetoContext):
-        return self.visitChildren(ctx)
+        return ctx.STRING().getText().strip('"')
 
-
-    # Visit a parse tree produced by BricolagemParser#conformidadeProjetoBNCC.
     def visitConformidadeProjetoBNCC(self, ctx:BricolagemParser.ConformidadeProjetoBNCCContext):
-        return self.visitChildren(ctx)
+        return [child for c in ctx.children if (child := self.visit(c)) is not None]
 
-
-    # Visit a parse tree produced by BricolagemParser#PIDBNCCProjeto.
     def visitPIDBNCCProjeto(self, ctx:BricolagemParser.PIDBNCCProjetoContext):
-        return self.visitChildren(ctx)
-
-
+        return ctx.getText().strip('"')
 
 del BricolagemParser
